@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "chatui_server",
+    "chatui_client"
+]
