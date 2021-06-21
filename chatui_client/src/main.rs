@@ -4,6 +4,9 @@ use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 use std::time::Duration;
 
+use serde_json::json;
+use serde_json::Value;
+
 const LOCAL: &str = "127.0.0.1:3000";
 const MSG_SIZE: usize = 64;
 
@@ -18,6 +21,8 @@ fn get_name() -> String {
 
 fn main() {
     let name = get_name();
+
+    let extra_name = name.clone();
 
     let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
@@ -38,12 +43,12 @@ fn main() {
                         .collect::<Vec<u8>>(),
                 )
                 .expect("Invalid utf8 message.");
-
-                let components = msg.split(": ").collect::<Vec<&str>>();
-
-                if components[0] != name {
-                    println!("{}", msg)
-                };
+                let data: Value = serde_json::from_str(&msg).expect("Failed to parse data.");
+                println!(
+                    "{}: {}",
+                    data["name"].as_str().unwrap(),
+                    data["message"].as_str().unwrap()
+                );
             }
             Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
             Err(_) => {
@@ -54,7 +59,9 @@ fn main() {
 
         match rx.try_recv() {
             Ok(msg) => {
-                let mut buff = format!("{}: {}", name, msg).clone().into_bytes();
+                let mut buff = json!({ "message": msg, "name": name })
+                    .to_string()
+                    .into_bytes();
                 buff.resize(MSG_SIZE, 0);
                 client.write_all(&buff).expect("Writing to socket failed.");
             }
@@ -70,8 +77,7 @@ fn main() {
         io::stdin()
             .read_line(&mut buff)
             .expect("Reading from stdin failed.");
-        let msg = buff.trim().to_string();
-        if msg == ":q" || tx.send(msg).is_err() {
+        if tx.send(buff.trim().to_string()).is_err() {
             break;
         }
     }
