@@ -57,7 +57,7 @@ fn main() {
 
         match rx.try_recv() {
             Ok(msg) => {
-                let mut buff = json!({ "message": msg, "name": name })
+                let mut buff = json!({ "name": name, "message": msg })
                     .to_string()
                     .into_bytes();
                 buff.resize(MSG_SIZE, 0);
