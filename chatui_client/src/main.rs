@@ -22,8 +22,6 @@ fn get_name() -> String {
 fn main() {
     let name = get_name();
 
-    let extra_name = name.clone();
-
     let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
     client
