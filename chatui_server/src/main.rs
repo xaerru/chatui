@@ -1,3 +1,4 @@
+use serde_json::Value;
 use std::io::{ErrorKind, Read, Write};
 use std::net::{TcpListener, TcpStream};
 use std::sync::mpsc;
@@ -36,7 +37,9 @@ fn main() {
                                 .collect::<Vec<u8>>(),
                         )
                         .expect("Invalid utf8 message.");
-                        println!("{}: {}", addr, msg);
+                        let data: Value =
+                            serde_json::from_str(&msg).expect("Failed to parse data.");
+                        println!("{:?}", data);
                         tx.send(msg).expect("Failed to send msg to rx.");
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
