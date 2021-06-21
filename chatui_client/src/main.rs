@@ -10,7 +10,6 @@ const MSG_SIZE: usize = 64;
 fn get_name() -> String {
     println!("Enter your name:");
     let mut name = String::new();
-
     io::stdin()
         .read_line(&mut name)
         .expect("Reading from stdin failed.");
