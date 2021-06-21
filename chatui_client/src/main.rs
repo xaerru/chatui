@@ -7,7 +7,19 @@ use std::time::Duration;
 const LOCAL: &str = "127.0.0.1:3000";
 const MSG_SIZE: usize = 64;
 
-fn chat(name: String) {
+fn get_name() -> String {
+    println!("Enter your name:");
+    let mut name = String::new();
+
+    io::stdin()
+        .read_line(&mut name)
+        .expect("Reading from stdin failed.");
+    name.trim().to_string()
+}
+
+fn main() {
+    let name = get_name();
+
     let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
     client
@@ -65,17 +77,4 @@ fn chat(name: String) {
         }
     }
     println!("Bye.");
-}
-
-fn main() {
-    println!("Enter your name:");
-    let mut name = String::new();
-
-    io::stdin()
-        .read_line(&mut name)
-        .expect("Reading from stdin failed.");
-
-    if !name.is_empty() {
-        chat(name.trim().to_string());
-    }
 }
