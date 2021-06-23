@@ -40,7 +40,10 @@ fn main() {
                         println!("{}", msg);
                         tx.send(msg).expect("Failed to send msg to rx.");
                     }
-                    Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
+                    Err(ref err) if err.kind() == ErrorKind::WouldBlock => {
+                        println!("Blocking Error.");
+                        break;
+                    }
                     Err(_) => {
                         println!("closing connection with: {}", addr);
                         break;
