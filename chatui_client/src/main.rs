@@ -8,7 +8,7 @@ use serde_json::json;
 use serde_json::Value;
 
 const LOCAL: &str = "127.0.0.1:3000";
-const MSG_SIZE: usize = 64;
+const MSG_SIZE: usize = 256;
 
 fn get_name() -> String {
     println!("Enter your name:");
