@@ -47,7 +47,7 @@ fn main() {
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
                     Err(e) => {
-                        println!("Closing connection with: {}\nDue to {}", addr, e);
+                        println!("Closing connection with: {}\n{}", addr, e);
                         break;
                     }
                 }
