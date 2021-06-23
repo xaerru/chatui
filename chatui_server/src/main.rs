@@ -44,8 +44,8 @@ fn main() {
                         println!("Blocking Error.");
                         break;
                     }
-                    Err(_) => {
-                        println!("closing connection with: {}", addr);
+                    Err(e) => {
+                        println!("Closing connection with: {}\nDue to {}", addr, e);
                         break;
                     }
                 }
