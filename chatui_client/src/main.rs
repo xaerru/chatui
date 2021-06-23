@@ -48,9 +48,12 @@ fn main() {
                     data["message"].as_str().unwrap()
                 );
             }
-            Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
+            Err(ref err) if err.kind() == ErrorKind::WouldBlock => {
+                println!("Blocking Error.");
+                break;
+            }
             Err(_) => {
-                println!("Connection with server was severed.");
+                println!("Server stopped responding.");
                 break;
             }
         }
