@@ -16,10 +16,17 @@ Move to the project directory:
 cd chatui
 ```
 
-Run the server:
+Run the server (Rust):
 
 ```bash
 cargo run --release --bin chatui_server
+```
+
+Run the server (Node.js):
+
+```bash
+cd chatui_server_node
+node index.js
 ```
 
 Run the client:
