@@ -13,6 +13,8 @@ fn sleep() {
 fn main() {
     let server = TcpListener::bind(LOCAL).expect("Listener failed to bind.");
 
+    println!("Listening on {}", LOCAL);
+
     server
         .set_nonblocking(true)
         .expect("Failed to initialize non-blocking.");
@@ -43,10 +45,7 @@ fn main() {
                         println!("{}", msg);
                         tx.send(msg).expect("Failed to send msg to rx.");
                     }
-                    Err(ref err) if err.kind() == ErrorKind::WouldBlock => {
-                        println!("Blocking Error.");
-                        break;
-                    }
+                    Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
                     Err(e) => {
                         println!("Closing connection with: {}\nDue to {}", addr, e);
                         break;
