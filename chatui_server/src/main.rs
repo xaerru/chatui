@@ -37,9 +37,7 @@ fn main() {
                                 .collect::<Vec<u8>>(),
                         )
                         .expect("Invalid utf8 message.");
-                        let data: Value =
-                            serde_json::from_str(&msg).expect("Failed to parse data.");
-                        println!("{:?}", data);
+                        println!("{}", msg);
                         tx.send(msg).expect("Failed to send msg to rx.");
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => (),
