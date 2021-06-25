@@ -19,7 +19,7 @@ fn get_name() -> String {
     name.trim().to_string()
 }
 
-fn send(tx: Sender<String>) {
+fn start_tx_loop(tx: Sender<String>) {
     loop {
         let mut buff = String::new();
         io::stdin()
@@ -46,9 +46,7 @@ fn parse(buff: Vec<u8>) {
     );
 }
 
-fn main() {
-    let name = get_name();
-
+fn start_rx_loop(name: String) -> (Sender<String>, std::thread::JoinHandle<()>) {
     let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
     client
@@ -57,7 +55,7 @@ fn main() {
 
     let (tx, rx) = mpsc::channel::<String>();
 
-    thread::spawn(move || loop {
+    let handle = thread::spawn(move || loop {
         let mut buff = vec![0; MSG_SIZE];
 
         match client.read_exact(&mut buff) {
@@ -86,7 +84,15 @@ fn main() {
         thread::sleep(Duration::from_millis(100));
     });
 
-    send(tx);
+    (tx, handle)
+}
+
+fn main() {
+    let name = get_name();
+
+    let (tx, _handle) = start_rx_loop(name);
+
+    start_tx_loop(tx);
 
     println!("Bye.");
 }
