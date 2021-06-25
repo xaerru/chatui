@@ -1,8 +1,8 @@
 use std::io::{self, ErrorKind, Read, Write};
 use std::net::TcpStream;
 use std::sync::mpsc::{self, TryRecvError};
-use std::thread;
 use std::time::Duration;
+use std::{process, thread};
 
 use serde_json::json;
 use serde_json::Value;
@@ -51,7 +51,7 @@ fn main() {
             Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
             Err(_) => {
                 println!("Server stopped responding.");
-                break;
+                process::exit(1);
             }
         }
 
