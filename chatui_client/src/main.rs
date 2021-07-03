@@ -173,6 +173,7 @@ fn start_rx_loop(name: String) {
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
                     Err(_) => {
+                        exit();
                         println!("Server stopped responding.");
                         process::exit(1);
                     }
