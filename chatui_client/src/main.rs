@@ -3,8 +3,7 @@ use crossterm::{
     event::{self, poll, Event, KeyCode, KeyModifiers},
     execute, terminal,
 };
-use serde_json::json;
-use serde_json::Value;
+use serde_json::{json, Value};
 use std::{
     io::{self, ErrorKind, Read, Write},
     net::TcpStream,
