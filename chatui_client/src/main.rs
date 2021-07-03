@@ -93,6 +93,7 @@ fn start_rx_loop(name: String) {
                 let input = Paragraph::new(app.input.as_ref()).block(
                     Block::default()
                         .borders(Borders::ALL)
+                        .border_type(tui::widgets::BorderType::Rounded)
                         .title("Message")
                         .style(
                             Style::default()
@@ -108,7 +109,12 @@ fn start_rx_loop(name: String) {
                     .messages
                     .iter()
                     .map(|m| {
-                        let content = vec![Spans::from(Span::raw(format!("{}", m)))];
+                        let content = vec![Spans::from(Span::styled(
+                            format!("{}", m),
+                            Style::default()
+                                .add_modifier(Modifier::BOLD)
+                                .fg(tui::style::Color::Rgb(216, 222, 233)),
+                        ))];
                         ListItem::new(content)
                     })
                     .collect();
@@ -119,8 +125,11 @@ fn start_rx_loop(name: String) {
                     app.messages.remove(0);
                 }
 
-                let messages =
-                    List::new(messages.clone()).block(Block::default().borders(Borders::ALL));
+                let messages = List::new(messages.clone()).block(
+                    Block::default()
+                        .borders(Borders::ALL)
+                        .border_type(tui::widgets::BorderType::Rounded),
+                );
 
                 f.render_widget(messages, root[0]);
 
