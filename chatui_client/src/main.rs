@@ -5,6 +5,7 @@ use crossterm::{
 };
 use serde_json::{json, Value};
 use std::{
+    fmt::format,
     io::{self, ErrorKind, Read, Write},
     net::TcpStream,
     process,
@@ -99,7 +100,7 @@ fn start_rx_loop(name: String) {
                     .messages
                     .iter()
                     .map(|m| {
-                        let content = vec![Spans::from(Span::raw(format!("{}: {}", name, m)))];
+                        let content = vec![Spans::from(Span::raw(format!("{}", m)))];
                         ListItem::new(content)
                     })
                     .collect();
@@ -169,7 +170,11 @@ fn start_rx_loop(name: String) {
                     match key.code {
                         KeyCode::Enter => {
                             tx.send(app.input.clone()).unwrap();
-                            app.messages.push(app.input.drain(..).collect());
+                            app.messages.push(format!(
+                                "{}: {}",
+                                name,
+                                app.input.drain(..).collect::<String>()
+                            ));
                         }
                         KeyCode::Char(c) => {
                             app.input.push(c);
