@@ -60,6 +60,8 @@ fn start_rx_loop(name: String) {
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend).unwrap();
 
+    let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
+
     terminal::enable_raw_mode().unwrap();
 
     execute!(
@@ -69,8 +71,6 @@ fn start_rx_loop(name: String) {
         terminal::EnterAlternateScreen
     )
     .unwrap();
-
-    let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
     let mut app = App::default();
 
