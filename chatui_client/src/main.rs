@@ -1,7 +1,9 @@
 use crossterm::{
     self, cursor,
     event::{self, poll, Event, KeyCode, KeyModifiers},
-    execute, terminal,
+    execute,
+    style::style,
+    terminal,
 };
 use serde_json::{json, Value};
 use std::{
@@ -98,7 +100,7 @@ fn start_rx_loop(name: String) {
                         .style(
                             Style::default()
                                 .add_modifier(Modifier::BOLD)
-                                .fg(Color::Rgb(136, 192, 208)),
+                                .fg(Color::Rgb(163, 190, 140)),
                         ),
                 );
 
@@ -139,8 +141,10 @@ fn start_rx_loop(name: String) {
 
                 let messages = List::new(messages.clone()).block(
                     Block::default()
+                        .title(name.clone())
                         .borders(Borders::ALL)
-                        .border_type(BorderType::Rounded),
+                        .border_type(BorderType::Rounded)
+                        .style(Style::default().fg(Color::Rgb(129, 161, 193))),
                 );
 
                 f.render_widget(messages, root[0]);
