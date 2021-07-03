@@ -86,7 +86,7 @@ fn start_rx_loop(name: String) {
             .draw(|f| {
                 let root = Layout::default()
                     .direction(Direction::Vertical)
-                    .constraints([Constraint::Percentage(80), Constraint::Percentage(20)])
+                    .constraints([Constraint::Percentage(95), Constraint::Percentage(5)])
                     .margin(2)
                     .split(f.size());
 
