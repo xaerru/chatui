@@ -5,17 +5,19 @@ use crossterm::{
 };
 use serde_json::json;
 use serde_json::Value;
-use std::io::{self, ErrorKind, Read, Write};
-use std::net::TcpStream;
-use std::process;
-use std::sync::mpsc::{self, TryRecvError};
-use std::time::Duration;
-use tui::backend::CrosstermBackend;
-use tui::Terminal;
+use std::{
+    io::{self, ErrorKind, Read, Write},
+    net::TcpStream,
+    process,
+    sync::mpsc::{self, TryRecvError},
+    time::Duration,
+};
 use tui::{
+    backend::CrosstermBackend,
     layout::{Constraint, Direction, Layout},
     text::{Span, Spans},
     widgets::{Block, Borders, List, ListItem, Paragraph},
+    Terminal,
 };
 use unicode_width::UnicodeWidthStr;
 
