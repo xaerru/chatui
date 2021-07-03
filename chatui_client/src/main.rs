@@ -16,7 +16,7 @@ use tui::{
     layout::{Constraint, Direction, Layout},
     style::{Color, Modifier, Style},
     text::{Span, Spans},
-    widgets::{Block, Borders, List, ListItem, Paragraph},
+    widgets::{Block, BorderType, Borders, List, ListItem, Paragraph},
     Terminal,
 };
 use unicode_width::UnicodeWidthStr;
@@ -93,12 +93,12 @@ fn start_rx_loop(name: String) {
                 let input = Paragraph::new(app.input.as_ref()).block(
                     Block::default()
                         .borders(Borders::ALL)
-                        .border_type(tui::widgets::BorderType::Rounded)
+                        .border_type(BorderType::Rounded)
                         .title("Message")
                         .style(
                             Style::default()
                                 .add_modifier(Modifier::BOLD)
-                                .fg(tui::style::Color::Rgb(136, 192, 208)),
+                                .fg(Color::Rgb(136, 192, 208)),
                         ),
                 );
 
@@ -123,7 +123,7 @@ fn start_rx_loop(name: String) {
                             Span::styled(
                                 message.clone(),
                                 Style::default()
-                                    .fg(tui::style::Color::Rgb(129, 161, 193))
+                                    .fg(Color::Rgb(129, 161, 193))
                                     .add_modifier(Modifier::BOLD),
                             ),
                         ])];
@@ -140,7 +140,7 @@ fn start_rx_loop(name: String) {
                 let messages = List::new(messages.clone()).block(
                     Block::default()
                         .borders(Borders::ALL)
-                        .border_type(tui::widgets::BorderType::Rounded),
+                        .border_type(BorderType::Rounded),
                 );
 
                 f.render_widget(messages, root[0]);
