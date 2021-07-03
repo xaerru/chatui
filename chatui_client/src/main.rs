@@ -59,7 +59,6 @@ fn start_rx_loop(name: String) {
     let stdout = io::stdout();
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend).unwrap();
-
     let mut client = TcpStream::connect(LOCAL).expect("Stream failed to connect.");
 
     terminal::enable_raw_mode().unwrap();
@@ -99,7 +98,7 @@ fn start_rx_loop(name: String) {
                     .messages
                     .iter()
                     .map(|m| {
-                        let content = vec![Spans::from(Span::raw(format!("{}", m)))];
+                        let content = vec![Spans::from(Span::raw(format!("{}: {}", name, m)))];
                         ListItem::new(content)
                     })
                     .collect();
@@ -114,11 +113,13 @@ fn start_rx_loop(name: String) {
                 match client.read_exact(&mut buff) {
                     Ok(_) => {
                         let data = parse(buff);
-                        app.messages.push(format!(
-                            "{}: {}",
-                            data["name"].as_str().unwrap(),
-                            data["message"].as_str().unwrap()
-                        ));
+                        if data["name"] != name {
+                            app.messages.push(format!(
+                                "{}: {}",
+                                data["name"].as_str().unwrap(),
+                                data["message"].as_str().unwrap()
+                            ));
+                        }
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
                     Err(_) => {
@@ -140,6 +141,7 @@ fn start_rx_loop(name: String) {
                 }
             })
             .unwrap();
+
         if poll(Duration::from_millis(0)).unwrap() {
             match event::read().unwrap() {
                 Event::Key(key) => {
