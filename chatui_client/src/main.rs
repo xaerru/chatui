@@ -1,7 +1,9 @@
 use crossterm::{
     self, cursor,
     event::{self, poll, Event, KeyCode, KeyModifiers},
-    execute, terminal,
+    execute,
+    style::Colorize,
+    terminal,
 };
 use serde_json::{json, Value};
 use std::{
@@ -14,7 +16,7 @@ use std::{
 use tui::{
     backend::CrosstermBackend,
     layout::{Constraint, Direction, Layout},
-    style::{Modifier, Style},
+    style::{Color, Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Borders, List, ListItem, Paragraph},
     Terminal,
@@ -109,12 +111,24 @@ fn start_rx_loop(name: String) {
                     .messages
                     .iter()
                     .map(|m| {
-                        let content = vec![Spans::from(Span::styled(
-                            format!("{}", m),
-                            Style::default()
-                                .add_modifier(Modifier::BOLD)
-                                .fg(tui::style::Color::Rgb(216, 222, 233)),
-                        ))];
+                        let m = m.clone();
+                        let payload: Vec<String> = m.split(": ").map(|f| f.to_string()).collect();
+                        let name = &payload[0];
+                        let message = &payload[1];
+                        let content = vec![Spans::from(vec![
+                            Span::styled(
+                                name.clone() + ": ",
+                                Style::default()
+                                    .add_modifier(Modifier::BOLD)
+                                    .fg(Color::Rgb(216, 222, 233)),
+                            ),
+                            Span::styled(
+                                message.clone(),
+                                Style::default()
+                                    .fg(tui::style::Color::Rgb(129, 161, 193))
+                                    .add_modifier(Modifier::BOLD),
+                            ),
+                        ])];
                         ListItem::new(content)
                     })
                     .collect();
