@@ -8,3 +8,6 @@ license = "Apache-2.0"
 
 [dependencies]
 serde_json = "1.0.64"
+crossterm = "0.19"
+tui = { version = "0.15", default-features = false, features = ['crossterm'] }
+unicode-width = "0.1.8"
