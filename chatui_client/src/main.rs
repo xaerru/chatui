@@ -14,6 +14,7 @@ use std::{
 use tui::{
     backend::CrosstermBackend,
     layout::{Constraint, Direction, Layout},
+    style::{Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Borders, List, ListItem, Paragraph},
     Terminal,
@@ -89,8 +90,16 @@ fn start_rx_loop(name: String) {
                     .margin(2)
                     .split(f.size());
 
-                let input = Paragraph::new(app.input.as_ref())
-                    .block(Block::default().borders(Borders::ALL).title("Message"));
+                let input = Paragraph::new(app.input.as_ref()).block(
+                    Block::default()
+                        .borders(Borders::ALL)
+                        .title("Message")
+                        .style(
+                            Style::default()
+                                .add_modifier(Modifier::BOLD)
+                                .fg(tui::style::Color::Rgb(136, 192, 208)),
+                        ),
+                );
 
                 f.set_cursor(root[1].x + app.input.width() as u16 + 1, root[1].y + 1);
                 f.render_widget(input, root[1]);
