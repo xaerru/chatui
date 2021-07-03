@@ -22,14 +22,14 @@ use unicode_width::UnicodeWidthStr;
 const LOCAL: &str = "127.0.0.1:3000";
 const MSG_SIZE: usize = 256;
 
-struct App {
+struct InputState {
     input: String,
     messages: Vec<String>,
 }
 
-impl Default for App {
-    fn default() -> App {
-        App {
+impl Default for InputState {
+    fn default() -> InputState {
+        InputState {
             input: String::new(),
             messages: Vec::new(),
         }
@@ -71,7 +71,7 @@ fn start_rx_loop(name: String) {
     )
     .unwrap();
 
-    let mut app = App::default();
+    let mut app = InputState::default();
 
     client
         .set_nonblocking(true)
