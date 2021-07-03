@@ -7,14 +7,13 @@ use serde_json::json;
 use serde_json::Value;
 use std::io::{self, ErrorKind, Read, Write};
 use std::net::TcpStream;
-use std::sync::mpsc::{self, Sender, TryRecvError};
+use std::process;
+use std::sync::mpsc::{self, TryRecvError};
 use std::time::Duration;
-use std::{process, thread};
+use tui::backend::CrosstermBackend;
 use tui::Terminal;
-use tui::{backend::CrosstermBackend, widgets::BorderType};
 use tui::{
     layout::{Constraint, Direction, Layout},
-    style::{Color, Modifier, Style},
     text::{Span, Spans},
     widgets::{Block, Borders, List, ListItem, Paragraph},
 };
