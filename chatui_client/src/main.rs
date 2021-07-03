@@ -90,7 +90,7 @@ fn start_rx_loop(name: String) {
                     .split(f.size());
 
                 let input = Paragraph::new(app.input.as_ref())
-                    .block(Block::default().borders(Borders::ALL).title("Input"));
+                    .block(Block::default().borders(Borders::ALL).title("Message"));
 
                 f.set_cursor(root[1].x + app.input.width() as u16 + 1, root[1].y + 1);
                 f.render_widget(input, root[1]);
@@ -110,8 +110,8 @@ fn start_rx_loop(name: String) {
                     app.messages.remove(0);
                 }
 
-                let messages = List::new(messages.clone())
-                    .block(Block::default().borders(Borders::ALL).title("Messages"));
+                let messages =
+                    List::new(messages.clone()).block(Block::default().borders(Borders::ALL));
 
                 f.render_widget(messages, root[0]);
 
