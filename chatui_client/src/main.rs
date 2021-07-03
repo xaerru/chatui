@@ -1,9 +1,7 @@
 use crossterm::{
     self, cursor,
     event::{self, poll, Event, KeyCode, KeyModifiers},
-    execute,
-    style::style,
-    terminal,
+    execute, terminal,
 };
 use serde_json::{json, Value};
 use std::{
