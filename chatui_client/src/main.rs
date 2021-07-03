@@ -57,6 +57,17 @@ fn parse(buff: Vec<u8>) -> Value {
     serde_json::from_str(&msg).expect("Failed to parse data.")
 }
 
+fn exit() {
+    terminal::disable_raw_mode().unwrap();
+    execute!(
+        io::stdout(),
+        cursor::RestorePosition,
+        cursor::Show,
+        terminal::LeaveAlternateScreen,
+    )
+    .unwrap();
+}
+
 fn start_rx_loop(name: String) {
     let stdout = io::stdout();
     let backend = CrosstermBackend::new(stdout);
@@ -186,19 +197,15 @@ fn start_rx_loop(name: String) {
                 Event::Key(key) => {
                     if key.modifiers.contains(KeyModifiers::CONTROL) {
                         if let KeyCode::Char('c') = key.code {
-                            terminal.clear().unwrap();
-                            terminal::disable_raw_mode().unwrap();
-                            execute!(
-                                io::stdout(),
-                                cursor::RestorePosition,
-                                cursor::Show,
-                                terminal::LeaveAlternateScreen,
-                            )
-                            .unwrap();
+                            exit();
                             break;
                         };
                     }
                     match key.code {
+                        KeyCode::Esc => {
+                            exit();
+                            break;
+                        }
                         KeyCode::Enter => {
                             tx.send(app.input.clone()).unwrap();
                             app.messages.push(format!(
