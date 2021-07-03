@@ -5,7 +5,6 @@ use crossterm::{
 };
 use serde_json::{json, Value};
 use std::{
-    fmt::format,
     io::{self, ErrorKind, Read, Write},
     net::TcpStream,
     process,
