@@ -103,7 +103,13 @@ fn start_rx_loop(name: String) {
                     })
                     .collect();
 
-                let messages = List::new(messages)
+                let limit = root[0].height - 2;
+
+                if app.messages.len() > limit as usize {
+                    app.messages.remove(0);
+                }
+
+                let messages = List::new(messages.clone())
                     .block(Block::default().borders(Borders::ALL).title("Messages"));
 
                 f.render_widget(messages, root[0]);
