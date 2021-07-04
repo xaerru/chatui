@@ -3,7 +3,10 @@ name = "chatui_client"
 version = "0.1.0"
 edition = "2018"
 authors = ["grvxs gauravsinghsisodia5@gmail.com"]
+description = "Server for chatui."
+keywords = ["tui", "chat"]
 repository = "https://github.com/grvxs/chatui"
+readme = "../README.md"
 license = "Apache-2.0"
 
 [dependencies]
