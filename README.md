@@ -47,4 +47,6 @@ Run the client:
 cargo run --release --bin chatui_client
 ```
 
-## Pictures
+## Screenshots
+
+![image](https://user-images.githubusercontent.com/65955464/124386731-6090c580-dcf9-11eb-9be5-8c2c07075dde.png)
