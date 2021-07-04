@@ -1,9 +1,9 @@
 [package]
 name = "chatui_client"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2018"
 authors = ["grvxs gauravsinghsisodia5@gmail.com"]
-description = "Server for chatui."
+description = "Client for chatui."
 keywords = ["tui", "chat"]
 repository = "https://github.com/grvxs/chatui"
 readme = "../README.md"

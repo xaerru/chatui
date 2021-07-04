@@ -1,6 +1,6 @@
 [package]
 name = "chatui_server"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2018"
 authors = ["grvxs gauravsinghsisodia5@gmail.com"]
 description = "Server for chatui."
