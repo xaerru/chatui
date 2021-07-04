@@ -3,7 +3,7 @@ name = "chatui_client"
 version = "0.1.0"
 edition = "2018"
 authors = ["grvxs gauravsinghsisodia5@gmail.com"]
-repository = "https://github.com/grvxs/jokeapi_rs"
+repository = "https://github.com/grvxs/chatui"
 license = "Apache-2.0"
 
 [dependencies]
