@@ -2,7 +2,19 @@
 
 Simple chat application.
 
+You'll need both [`chatui_server`](https://crates.io/crates/chatui_server) and [`chatui_client`](https://crates.io/crates/chatui_client) to run this application.
+
 ## Installation
+
+### With cargo
+
+```bash
+cargo intall chatui_server chatui_client
+```
+
+Run the server with executable `chatui_server` and run the client with executable `chatui_client`.
+
+### Without cargo
 
 Clone the project:
 
@@ -35,4 +47,4 @@ Run the client:
 cargo run --release --bin chatui_client
 ```
 
-You can connect multiple clients.
+## Pictures
