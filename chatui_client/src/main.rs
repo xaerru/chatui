@@ -121,7 +121,7 @@ fn start_rx_loop(name: String) {
                     .iter()
                     .map(|m| {
                         let m = m.clone();
-                        let payload: Vec<String> = m.split(": ").map(|f| f.to_string()).collect();
+                        let payload: Vec<String> = m.split(" ").map(|f| f.to_string()).collect();
                         let name = &payload[0];
                         let message = &payload[1];
                         let content = vec![Spans::from(vec![
@@ -165,7 +165,7 @@ fn start_rx_loop(name: String) {
                         let data = parse(buff);
                         if data["name"] != name {
                             app.messages.push(format!(
-                                "{}: {}",
+                                "{} {}",
                                 data["name"].as_str().unwrap(),
                                 data["message"].as_str().unwrap()
                             ));
