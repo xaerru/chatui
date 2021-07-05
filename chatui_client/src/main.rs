@@ -120,12 +120,12 @@ fn start_rx_loop(name: String) {
                     .messages
                     .iter()
                     .map(|m| {
-                        let m = m.clone();
-                        let name = m["name"].to_string();
-                        let message = m["message"].to_string();
+                        let t = m.clone();
+                        let name = t["name"].as_str().unwrap().to_string();
+                        let message = t["message"].as_str().unwrap().to_string();
                         let content = vec![Spans::from(vec![
                             Span::styled(
-                                name,
+                                name + ": ",
                                 Style::default()
                                     .add_modifier(Modifier::BOLD)
                                     .fg(Color::Rgb(216, 222, 233)),
@@ -163,11 +163,7 @@ fn start_rx_loop(name: String) {
                     Ok(_) => {
                         let data = parse(buff);
                         if data["name"] != name {
-                            app.messages.push(format!(
-                                "{} {}",
-                                data["name"].as_str().unwrap(),
-                                data["message"].as_str().unwrap()
-                            ));
+                            app.messages.push(data);
                         }
                     }
                     Err(ref err) if err.kind() == ErrorKind::WouldBlock => {}
@@ -208,11 +204,7 @@ fn start_rx_loop(name: String) {
                         }
                         KeyCode::Enter => {
                             tx.send(app.input.clone()).unwrap();
-                            app.messages.push(format!(
-                                "{}: {}",
-                                name,
-                                app.input.drain(..).collect::<String>()
-                            ));
+                            app.messages.push(json!({"name": name, "message": app.input.drain(..).collect::<String>()}));
                         }
                         KeyCode::Char(c) => {
                             app.input.push(c);
