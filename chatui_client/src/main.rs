@@ -26,7 +26,7 @@ const MSG_SIZE: usize = 256;
 
 struct InputState {
     input: String,
-    messages: Vec<String>,
+    messages: Vec<Value>,
 }
 
 impl Default for InputState {
@@ -121,18 +121,17 @@ fn start_rx_loop(name: String) {
                     .iter()
                     .map(|m| {
                         let m = m.clone();
-                        let payload: Vec<String> = m.split(" ").map(|f| f.to_string()).collect();
-                        let name = &payload[0];
-                        let message = &payload[1];
+                        let name = m["name"].to_string();
+                        let message = m["message"].to_string();
                         let content = vec![Spans::from(vec![
                             Span::styled(
-                                name.clone() + ": ",
+                                name,
                                 Style::default()
                                     .add_modifier(Modifier::BOLD)
                                     .fg(Color::Rgb(216, 222, 233)),
                             ),
                             Span::styled(
-                                message.clone(),
+                                message,
                                 Style::default()
                                     .fg(Color::Rgb(129, 161, 193))
                                     .add_modifier(Modifier::BOLD),
