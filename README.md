@@ -9,7 +9,7 @@ You'll need both [`chatui_server`](https://crates.io/crates/chatui_server) and [
 ### With cargo
 
 ```bash
-cargo intall chatui_server chatui_client
+cargo install chatui_server chatui_client
 ```
 
 Run the server with executable `chatui_server` and run the client with executable `chatui_client`.
